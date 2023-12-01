@@ -3,12 +3,10 @@
 import os
 import csv
 
-# Used to create a dynamic dictionary that lists the candidate values as Keys and their vote counts as Values.
-# '''''''''''''''''' Found Collections import online
+# Creates a dynamic dictionary that lists the candidate values as Keys and their vote counts as Values.
 from collections import defaultdict
 
-# Used to help round the percentages later on in the calculations to avoid floating-point roundign errors when using
-#   python's built-in round() function
+# Used to help round the percentages later on in the calculations to avoid floating-point rounding errors
 import decimal
 
 # Defining the relative path to the CSV file
@@ -18,10 +16,6 @@ election_data_path = os.path.join("Resources", "election_data.csv")
 num_votes = 0
 winner_total = 0
 election_winner = "No Winner"
-
-# Part of the collections import
-# '''''''''''''''''' Found specific use of Decimal import online. 
-# '''''''''''''''''' Not cited due to use of proper syntax not neccitating citation as it is not an individual's code.
 counter = defaultdict(int)
 
 # This list stores each unique candidate voted for.
@@ -29,32 +23,26 @@ list_of_candidates = []
 list_of_keys = []
 list_of_totals = []
 
-# Setting code to use while the CSV file is open
+# Opening CSV and running processes
 with open(election_data_path) as csv_file:
-
 
     csv_reader = csv.reader(csv_file)
 
-    # First instance of using NEXT() in a variable COLLECTS THE FIRST LINE, WHICH ARE HEADERS
+    # First instance of using NEXT() in a variable collects the headers.
     csv_header = next(csv_reader)
-    # print(csv_header)
-
 
     for votes in csv_reader:
 
-        # Counts the number of votes by increasing by 1 for each row.
-        # THIS IS DATA-DEPENDANT, MEANING THIS IS WRITTEN BECUASE WE ALREADY KNOW THE DATA EQUALS 1 LINE PER VOTE
+        # This assumes 1 vote per line.
         num_votes += 1
         
-        # Creates a standard list of Candidates found in the data if they are not already in the list
-        # This lsit starts empty and populates with each new value (candidate) found in column 3 of the data
+        # Creates a standard list of Candidates found in the data if they are not already in the list.
+        # List starts empty and populates with each new value (candidate) found in column 3 of the CSV file.
         if votes[2] not in list_of_candidates:
             list_of_candidates.append(votes[2])
         
-        # Combined with the Collections Import this looks at the third column and creates a dicationary 
-        # as it iterates over it, setting candidates as Keys and their votes as Values
-        # '''''''''''''''''' Found specific use of Collections import online. 
-        # '''''''''''''''''' Not cited due to use of proper syntax not neccitating citation as it is not an individual's code.
+        # Combined with the Collections Import this looks at the third column 
+        # and creates a dicationary as it iterates over it, setting candidates as Keys and their votes as Values
         counter[votes[2]] += 1
 
     # Setting each candidate to their own correspoding index
@@ -86,15 +74,12 @@ with open(election_data_path) as csv_file:
     can_2_perc = (((counter.get(f"{candidate_2}")) / num_votes)*100)
     can_3_perc = (((counter.get(f"{candidate_3}")) / num_votes)*100)
     
-    # Rounding those percentages to 0.000
-    # '''''''''''''''''' Found specific use of Decimal import online. 
-    # '''''''''''''''''' Not cited due to use of proper syntax not neccitating citation as it is not an individual's code.
     can_1_perc = decimal.Decimal(can_1_perc).quantize(decimal.Decimal("0.000"))
     can_2_perc = decimal.Decimal(can_2_perc).quantize(decimal.Decimal("0.000"))
     can_3_perc = decimal.Decimal(can_3_perc).quantize(decimal.Decimal("0.000"))
 
 
-# Prints to the terminal
+# Print to terminal
 
 bar = "---------------------------------------"
 
@@ -109,7 +94,7 @@ print(bar)
 print(f"Winner: {election_winner}")
 
 
-# This exports the data to a .txt file
+# Export the data to a .txt file
 
 # Get the current directory
 current_directory = os.getcwd()

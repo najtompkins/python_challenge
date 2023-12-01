@@ -1,9 +1,8 @@
 # Importing Dependencies
-
 import os
 import csv
 
-# Defning the relative path to the CSV file
+# Defning the relative path to the CSV. 
 budget_data_path = os.path.join("Resources", "budget_data.csv")
 
 # Setting up variables for later (which were added as needed)
@@ -19,26 +18,24 @@ mean_of_numbers = []
 with open(budget_data_path) as csv_file:
 
     csv_reader = csv.reader(csv_file)
-    # First instance of using NEXT() in a variable COLLECTS THE FIRST LINE, WHICH ARE HEADERS
-    csv_header = next(csv_reader)
-    ## print(csv_header)
 
-    # FIRST ROW INSTRUCTIONS
-    # Second instance of NEXT() COLLECTS THE SECOND LINE, WHICH IS THE FIRST ROW OF DATA
+    # First instance of using NEXT() in a variable collected the HEADERS, not the data itself.
+    csv_header = next(csv_reader)
+
+    # Second instance of NEXT() collects the second line of the CSV, which is the first line of the data.
     first_row = next(csv_reader)
 
-    ## print(first_row)
-
+    # Convert the data to INT format then assign to variablees
     first_value = int(first_row[1])
     first_value_add = int(first_row[1])
-    max_value_date = str("Not Changed")
-    min_value_date = str("Also not Changed")
+    max_value_date = str("Max Unchanged")
+    min_value_date = str("Min Unchanged")
 
 
     for months in csv_reader:
 
         # Counts the number of months by increasing by 1 for each row. 
-        # THIS IS DEPENDANT ON THE DATA ALREADY HAVING ONLY 1 ENTRY PER MONTH
+        # (This is dependant on the data having only one entry per month.)
         num_months += 1
 
         # Adds each int(total) to each other, storing them in the sum_of_numbers variable
@@ -93,9 +90,7 @@ print(f"Greatest Decrease in Profits: {max_value_date} ${max_increase}")
 # Get the current directory
 current_directory = os.getcwd()
 
-# Create the "analysis" folder if it doesn't exist
-# '''''''''''''''''' 
-# '''''''''''''''''' Google Bard actually helped with the syntax of this!
+# Create the "analysis" folder if it doesn't exist.
 analysis_directory = os.path.join(current_directory, "Analysis")
 
 export_file_name = "Analysis.txt"
